@@ -1,0 +1,121 @@
+<HTML>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title> TWC Bert Demo</title>
+	<script>
+		function onSubmit() {
+			var actionUrl = "/api";
+			document.getElementById("tokenize").innerHTML = "";
+
+			switch(document.forms[0].type.value) {
+  			case "mecab":
+					actionUrl += "/mecab";
+					break;
+  			case "komoran":
+					actionUrl += "/kom";
+					break;
+  			case "kkma":
+					actionUrl += "/kkm";
+					break;
+  			case "hannanum":
+					actionUrl += "/han";
+					break;
+  			case "okt":
+					actionUrl += "/okt";
+					break;
+			case "all":
+				actionUrl += "/all";
+				break;
+  			default:
+					actionUrl += "/all";
+			}
+			var params=[];
+			var req = document.forms[0].contents.value.split('\n');
+			console.log(req + actionUrl);
+			for (var i=0; i<req.length; i++) {
+				params.push(req[i]);
+			}
+		        var reqData = {
+                		"contents": params
+        		}
+        		var xhr = new XMLHttpRequest();
+        		var retVal;
+
+        		xhr.open('GET', actionUrl, false);
+        		xhr.withCredentials = true;
+			xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
+
+        		xhr.onload = function(oEvent) {
+                		retVal =  xhr.response;
+				var res = JSON.parse(retVal);
+                		if(xhr.status == 200) {
+					var str = JSON.stringify(res,null, 4);
+					str = str.replaceAll("<", "&lt;");
+					str = str.replaceAll(">", "&gt;");
+					document.getElementById("tokenize").innerHTML = "<pre>" + str + "</pre>";
+					console.log(str);
+				//	document.getElementById("result").textContent = JSON.stringify(res,null, 4);
+                		} else {
+					console.log(xhr.status);
+					document.getElementById("tokenize").innerHTML = "<pre>" + JSON.stringify(res,null, 4) + "</pre>";
+                        	}
+                        	return retVal;
+                	}
+        		xhr.send(JSON.stringify(reqData));
+
+        		return true;
+		}
+		function check_item(val) {
+			document.getElementById("demoForm").type.value = val;
+		}
+		function limitLines(obj, limit) {
+			var values = obj.value.replace(/\r\n/g,"\n").split("\n")
+			if (values.length > limit) {
+				alert("최대 10개까지만 결과를 반환합니다.");
+				obj.value = values.slice(0, limit).join("\n")
+			}
+		}
+	</script>
+	<style>
+	.button {
+	  background-color: #555555; /* Green */
+	  border: none;
+	  color: white;
+	  width: 150px;
+	  height: 50px;
+	  padding: 15px 32px;
+	  text-align: center;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	}
+	</style>
+	</head>
+	<body>
+		<form id="demoForm">
+			<input type=radio name="type" value="mecab">
+			<a href="#" onClick=check_item('mecab')>Mecab(은전한닢)</a><BR/>
+			<input type=radio name="type" value="komoran">
+			<a href="#" onClick=check_item('komoran')>코모란</a>
+			<input type=radio name="type" value="kkma">
+			<a href="#" onClick=check_item('kkma')>꼬꼬마</a>
+			<input type=radio name="type" value="hannanum" >
+			<a href="#" onClick=check_item('hannanum')>한나눔</a><BR/>
+			<input type=radio name="type" value="okt">
+			<a href="#" onClick=check_item('okt')>Okt</a><BR/>
+			<input type=radio name="type" value="all">
+			<a href="#" onClick=check_item('all')>모두 한번에 보기</a><BR/>
+			<textarea name="contents" rows="10" cols="100" style="max-width:90%"
+				onkeydown="limitLines(this, 10)"></textarea><P/>
+			<input type="button" onClick="onSubmit()" value="형태소 나누기" class="button">
+			<input type="reset" value="초기화" class="button">
+			<p/>
+			<div id="result"></div>
+			<div class="lds-roller" style="display:none" id="loading">
+				<div></div><div></div><div></div><div></div>
+				<div></div><div></div><div></div><div></div>
+			</div>
+		</form>
+        <body onload="check_item('all')">
+	</body>
+</HTML>
