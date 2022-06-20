@@ -1,11 +1,11 @@
 <HTML>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title> TWC Bert Demo</title>
+		<title> AIML tokenizer test</title>
 	<script>
 		function onSubmit() {
 			var actionUrl = "/api";
-			document.getElementById("tokenize").innerHTML = "";
+			document.getElementById("result").innerHTML = "";
 
 			switch(document.forms[0].type.value) {
   			case "mecab":
@@ -52,12 +52,12 @@
 					var str = JSON.stringify(res,null, 4);
 					str = str.replaceAll("<", "&lt;");
 					str = str.replaceAll(">", "&gt;");
-					document.getElementById("tokenize").innerHTML = "<pre>" + str + "</pre>";
+					document.getElementById("result").innerHTML = "<pre>" + str + "</pre>";
 					console.log(str);
 				//	document.getElementById("result").textContent = JSON.stringify(res,null, 4);
                 		} else {
 					console.log(xhr.status);
-					document.getElementById("tokenize").innerHTML = "<pre>" + JSON.stringify(res,null, 4) + "</pre>";
+					document.getElementById("result").innerHTML = "<pre>" + JSON.stringify(res,null, 4) + "</pre>";
                         	}
                         	return retVal;
                 	}
@@ -100,7 +100,7 @@
 			<input type=radio name="type" value="kkma">
 			<a href="#" onClick=check_item('kkma')>꼬꼬마</a>
 			<input type=radio name="type" value="hannanum" >
-			<a href="#" onClick=check_item('hannanum')>한나눔</a><BR/>
+			<a href="#" onClick=check_item('hannanum')>한나눔</a>
 			<input type=radio name="type" value="okt">
 			<a href="#" onClick=check_item('okt')>Okt</a><BR/>
 			<input type=radio name="type" value="all">
@@ -116,6 +116,6 @@
 				<div></div><div></div><div></div><div></div>
 			</div>
 		</form>
-        <body onload="check_item('all')">
+        <body onload="check_item('all')"/>
 	</body>
 </HTML>
