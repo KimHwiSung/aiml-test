@@ -35,35 +35,34 @@
 			for (var i=0; i<req.length; i++) {
 				params.push(req[i]);
 			}
-		        var reqData = {
-                		"contents": params
-        		}
-        		var xhr = new XMLHttpRequest();
-        		var retVal;
+			var reqData = {
+					"origin_text": req
+			}
+			var xhr = new XMLHttpRequest();
+			var retVal;
 
-        		xhr.open('GET', actionUrl, false);
-        		xhr.withCredentials = true;
+			xhr.open('GET', actionUrl, false);
+			xhr.withCredentials = true;
 			xhr.setRequestHeader("Content-type", "application/json;charset=UTF-8");
 
-        		xhr.onload = function(oEvent) {
-                		retVal =  xhr.response;
+			xhr.onload = function(oEvent) {
+				retVal =  xhr.response;
 				var res = JSON.parse(retVal);
-                		if(xhr.status == 200) {
+				if(xhr.status == 200) {
 					var str = JSON.stringify(res,null, 4);
 					str = str.replaceAll("<", "&lt;");
 					str = str.replaceAll(">", "&gt;");
 					document.getElementById("result").innerHTML = "<pre>" + str + "</pre>";
 					console.log(str);
 				//	document.getElementById("result").textContent = JSON.stringify(res,null, 4);
-                		} else {
+				} else {
 					console.log(xhr.status);
 					document.getElementById("result").innerHTML = "<pre>" + JSON.stringify(res,null, 4) + "</pre>";
-                        	}
-                        	return retVal;
-                	}
-        		xhr.send(JSON.stringify(reqData));
-
-        		return true;
+				}
+				return retVal;
+			}
+			xhr.send(JSON.stringify(reqData));
+			return true;
 		}
 		function check_item(val) {
 			document.getElementById("demoForm").type.value = val;
