@@ -72,10 +72,12 @@ class AllTokenizer(APIView):
         kom_tokenizer = kom.pos(text, flatten=True, join=True)
         han_tokenizer = han.pos(text, flatten=True, join=True)
         okt_tokenizer = okt.pos(text, norm=True, stem=True, join=True)
+        mec_tokenizer = mec.pos(text, flatten=True, join=True)
         rtn_json = {
             "Komoran": ", ".join(kom_tokenizer),
             "Hannanum": ", ".join(han_tokenizer),
             "Okt": ", ".join(okt_tokenizer),
+            "Mecab": ", ".join(mec_tokenizer),
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
