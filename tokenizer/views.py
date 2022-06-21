@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 # Create your views here.
-# mec = Mecab()
+mec = Mecab()
 okt = Okt()
 kkm = Kkma()
 kom = Komoran()
@@ -18,15 +18,14 @@ class HealthCheck(APIView):
 
 class MecabText(APIView):
     def post(self, request):
-        # text = request.data.get("origin_text", None)
-        # if text is None:
-        #     Response(status=status.HTTP_400_BAD_REQUEST)
-        # mec_tokenizer = mec.pos(text, flatten=False, join=True)
-        # rtn_json = {
-        #     "tokenize": mec_tokenizer
-        # }
-        # return Response(rtn_json, status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_200_OK)
+        text = request.data.get("origin_text", None)
+        if text is None:
+            Response(status=status.HTTP_400_BAD_REQUEST)
+        mec_tokenizer = mec.pos(text, flatten=True, join=True)
+        rtn_json = {
+            "tokenize": ", ".join(mec_tokenizer)
+        }
+        return Response(rtn_json, status=status.HTTP_200_OK)
 
 
 class KomText(APIView):
