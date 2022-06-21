@@ -63,6 +63,7 @@
 		}
 		function check_item(val) {
 			document.getElementById("demoForm").type.value = val;
+			document.getElementById("result").innerHTML = "";
 		}
 		function limitLines(obj, limit) {
 			var values = obj.value.replace(/\r\n/g,"\n").split("\n")
