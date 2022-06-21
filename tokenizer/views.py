@@ -17,7 +17,7 @@ class HealthCheck(APIView):
 
 
 class MecabText(APIView):
-    def get(self, request):
+    def post(self, request):
         # text = request.data.get("origin_text", None)
         # if text is None:
         #     Response(status=status.HTTP_400_BAD_REQUEST)
@@ -30,7 +30,7 @@ class MecabText(APIView):
 
 
 class KomText(APIView):
-    def get(self, request):
+    def post(self, request):
         text = request.data.get("origin_text", None)
         if text is None:
             return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -42,7 +42,7 @@ class KomText(APIView):
 
 
 class KkmText(APIView):
-    def get(self, request):
+    def post(self, request):
         text = request.data.get("origin_text", None)
         if text is None:
             Response(status=status.HTTP_400_BAD_REQUEST)
@@ -54,7 +54,7 @@ class KkmText(APIView):
 
 
 class HanText(APIView):
-    def get(self, request):
+    def post(self, request):
         text = request.data.get("origin_text", None)
         if text is None:
             Response(status=status.HTTP_400_BAD_REQUEST)
@@ -66,7 +66,7 @@ class HanText(APIView):
 
 
 class OktText(APIView):
-    def get(self, request):
+    def post(self, request):
         text = request.data.get("origin_text", None)
         if text is None:
             Response(status=status.HTTP_400_BAD_REQUEST)
