@@ -16,15 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
-from tokenizer import MecabText, KomText, KkmText, HanText, OktText
+from tokenizer import MecabText, KomText, HanText, OktText, AllTokenizer
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/mecab', MecabText.as_view()),
     path('api/kom', KomText.as_view()),
-    path('api/kkm', KkmText.as_view()),
-    path('api/Han', HanText.as_view()),
+    path('api/han', HanText.as_view()),
     path('api/okt', OktText.as_view()),
+    path('api/all', AllTokenizer.as_view()),
 ]
 
