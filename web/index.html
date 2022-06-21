@@ -58,7 +58,7 @@
 				}
 				return retVal;
 			}
-			xhr.send(reqData);
+			xhr.send(JSON.stringify(reqData));
 			return true;
 		}
 		function check_item(val) {
