@@ -34,7 +34,7 @@ class MecabText(APIView):
         mec_tokenizer = mec.pos(text, flatten=True, join=True)
         rtn_json = {
             "tokenize": ", ".join(mec_tokenizer),
-            "최종 입력 값": tokenize(mec_tokenizer)
+            "최종 입력 값": tokenize(mec_tokenizer, "JX")
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
@@ -47,7 +47,7 @@ class KomText(APIView):
         kom_tokenizer = kom.pos(text, flatten=True, join=True)
         rtn_json = {
             "tokenize": ", ".join(kom_tokenizer),
-            "최종 입력 값": tokenize(kom_tokenizer)
+            "최종 입력 값": tokenize(kom_tokenizer, "JX")
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
@@ -60,7 +60,7 @@ class HanText(APIView):
         han_tokenizer = han.pos(text, flatten=True, join=True)
         rtn_json = {
             "tokenize": ", ".join(han_tokenizer),
-            "최종 입력 값": tokenize(han_tokenizer)
+            "최종 입력 값": tokenize(han_tokenizer, "J")
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
@@ -73,7 +73,7 @@ class OktText(APIView):
         okt_tokenizer = okt.pos(text, norm=True, stem=True, join=True)
         rtn_json = {
             "tokenize": ", ".join(okt_tokenizer),
-            "최종 입력 값": tokenize(okt_tokenizer)
+            "최종 입력 값": tokenize(okt_tokenizer, "Josa")
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
