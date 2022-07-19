@@ -11,6 +11,16 @@ kom = Komoran()
 han = Hannanum()
 
 
+def tokenize(pos_pattern):
+    for index, token in enumerate(pos_pattern):
+        pos_word = token.split("/")
+        if pos_word[-1] == "Josa":
+            pos_pattern[index] = pos_word[-1]
+        else:
+            pos_pattern[index] = pos_word[0]
+    return " ".join(pos_pattern)
+
+
 class HealthCheck(APIView):
     def get(self, request):
         return Response(status=status.HTTP_200_OK)
@@ -23,7 +33,8 @@ class MecabText(APIView):
             Response(status=status.HTTP_400_BAD_REQUEST)
         mec_tokenizer = mec.pos(text, flatten=True, join=True)
         rtn_json = {
-            "tokenize": ", ".join(mec_tokenizer)
+            "tokenize": ", ".join(mec_tokenizer),
+            "최종 입력 값": tokenize(mec_tokenizer)
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
@@ -35,7 +46,8 @@ class KomText(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         kom_tokenizer = kom.pos(text, flatten=True, join=True)
         rtn_json = {
-            "tokenize": ", ".join(kom_tokenizer)
+            "tokenize": ", ".join(kom_tokenizer),
+            "최종 입력 값": tokenize(kom_tokenizer)
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
@@ -47,7 +59,8 @@ class HanText(APIView):
             Response(status=status.HTTP_400_BAD_REQUEST)
         han_tokenizer = han.pos(text, flatten=True, join=True)
         rtn_json = {
-            "tokenize": ", ".join(han_tokenizer)
+            "tokenize": ", ".join(han_tokenizer),
+            "최종 입력 값": tokenize(han_tokenizer)
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
@@ -59,7 +72,8 @@ class OktText(APIView):
             Response(status=status.HTTP_400_BAD_REQUEST)
         okt_tokenizer = okt.pos(text, norm=True, stem=True, join=True)
         rtn_json = {
-            "tokenize": ", ".join(okt_tokenizer)
+            "tokenize": ", ".join(okt_tokenizer),
+            "최종 입력 값": tokenize(okt_tokenizer)
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
@@ -74,10 +88,22 @@ class AllTokenizer(APIView):
         okt_tokenizer = okt.pos(text, norm=True, stem=True, join=True)
         mec_tokenizer = mec.pos(text, flatten=True, join=True)
         rtn_json = {
-            "Komoran": ", ".join(kom_tokenizer),
-            "Hannanum": ", ".join(han_tokenizer),
-            "Okt": ", ".join(okt_tokenizer),
-            "Mecab": ", ".join(mec_tokenizer),
+            "Komoran": {
+                "tokenize": ", ".join(kom_tokenizer),
+                "최종 입력 값": tokenize(kom_tokenizer)
+            },
+            "Hannanum": {
+                "tokenize": ", ".join(han_tokenizer),
+                "최종 입력 값": tokenize(han_tokenizer)
+            },
+            "Okt": {
+                "tokenize": ", ".join(okt_tokenizer),
+                "최종 입력 값": tokenize(okt_tokenizer)
+            },
+            "Mecab": {
+                "tokenize": ", ".join(mec_tokenizer),
+                "최종 입력 값": tokenize(mec_tokenizer)
+            },
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
 
