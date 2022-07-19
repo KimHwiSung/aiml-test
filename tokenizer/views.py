@@ -11,10 +11,10 @@ kom = Komoran()
 han = Hannanum()
 
 
-def tokenize(pos_pattern):
+def tokenize(pos_pattern, pos):
     for index, token in enumerate(pos_pattern):
         pos_word = token.split("/")
-        if pos_word[-1] == "Josa":
+        if pos_word[-1] == pos:
             pos_pattern[index] = pos_word[-1]
         else:
             pos_pattern[index] = pos_word[0]
@@ -90,19 +90,19 @@ class AllTokenizer(APIView):
         rtn_json = {
             "Komoran": {
                 "tokenize": ", ".join(kom_tokenizer),
-                "최종 입력 값": tokenize(kom_tokenizer)
+                "최종 입력 값": tokenize(kom_tokenizer, "JX")
             },
             "Hannanum": {
                 "tokenize": ", ".join(han_tokenizer),
-                "최종 입력 값": tokenize(han_tokenizer)
+                "최종 입력 값": tokenize(han_tokenizer, "J")
             },
             "Okt": {
                 "tokenize": ", ".join(okt_tokenizer),
-                "최종 입력 값": tokenize(okt_tokenizer)
+                "최종 입력 값": tokenize(okt_tokenizer, "Josa")
             },
             "Mecab": {
                 "tokenize": ", ".join(mec_tokenizer),
-                "최종 입력 값": tokenize(mec_tokenizer)
+                "최종 입력 값": tokenize(mec_tokenizer, "JX")
             },
         }
         return Response(rtn_json, status=status.HTTP_200_OK)
